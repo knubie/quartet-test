@@ -18,6 +18,7 @@ class Question extends React.Component {
   }
 
   render() {
+    //TODO: answers could perhaps be their own component.
     return (
       <div>
         {this.props.question.text}

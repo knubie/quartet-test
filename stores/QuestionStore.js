@@ -57,12 +57,15 @@ function update(i, value) {
 }
 
 var QuestionStore = Object.assign({}, EventEmitter.prototype, {
+  // Get all questions/answers
   getQuestions: function() {
     return _questions;
   },
+  // Calculate the total score from all answered questions.
   getTotal: function() {
     return R.reduce(R.add, 0, R.map(R.prop('value'), _questions));
   },
+  // Returns whether or not all questions have been answered
   areAllAnswered: function() {
     return R.not(
       R.any(
@@ -86,6 +89,7 @@ var QuestionStore = Object.assign({}, EventEmitter.prototype, {
 });
 
 Dispatcher.register((action) => {
+  // Make sure the answer's score value is valid
   if (action.actionType === 'update' && R.any(R.equals(action.value), [0,1,2,3])) {
     update(action.id, action.value);
     QuestionStore.emitChange();
